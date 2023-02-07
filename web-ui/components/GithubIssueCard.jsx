@@ -7,8 +7,9 @@ import { useEffect, useState } from "react";
 import { BoostButton } from "myboostpow-lib";
 
 import axios from "axios";
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 import BugBountyPopup from "./BugBountyPopup";
+import { useTheme } from "next-themes";
 
 async function getBalance(address) {
   const { data } = await axios.get(
@@ -42,6 +43,7 @@ const GithubIssueCard = (props) => {
     user,
   } = props?.data;
   const router = useRouter()
+  const theme = useTheme()
   const [satoshis, setSatoshis] = useState(0);
   const [bugBountyPopupOpen, setBugBountyPopupOpen] = useState(false)
 
@@ -69,24 +71,35 @@ const GithubIssueCard = (props) => {
   }
 
   const handleBoostLoading = () => {
-    toastId = toast.loading("Transaction pending...", {
-      autoClose: 5000,
-    });
+    toast('Publishing Your Boost Job to the Network', {
+        icon: '⛏️',
+        style: {
+        borderRadius: '10px',
+        background: '#333',
+        color: '#fff',
+        },
+      });
   };
 
   const handleBoostSuccess = () => {
-    toast.update(toastId, {
-      render: "Transaction Successful",
-      type: "success",
-      isLoading: false,
-    });
+    toast('Success!', {
+        icon: '✅',
+        style: {
+        borderRadius: '10px',
+        background: '#333',
+        color: '#fff',
+        },
+      });
   };
 
   const handleBoostError = () => {
-    toast.update(toastId, {
-      render: "Transaction Failed",
-      type: "error",
-      isLoading: false,
+    toast('Error!', {
+        icon: '🐛',
+        style: {
+        borderRadius: '10px',
+        background: '#333',
+        color: '#fff',
+        },
     });
   };
 
@@ -97,11 +110,11 @@ const GithubIssueCard = (props) => {
         <div className="col-span-12 flex items-center justify-between">
           {/* <p className='p-4 text-sm italic text-gray-500 hover:underline'><a target="_blank" rel="noreferrer" href={repository.html_url}>{org} /{repo}</a></p> */}
           <p className="p-4 text-sm italic text-gray-600 dark:text-gray-300">
-            <Link href={`/org/${org}`}>
+            <Link href={`/${org}`}>
               <span className="hover:underline cursor-pointer">{org}</span>
             </Link>
             <span className="mx-1">/</span>
-            <Link href={`/org/${org}/${repo}`}>
+            <Link href={`/${org}/${repo}`}>
               <span className="hover:underline cursor-pointer">{repo}</span>
             </Link>
           </p>
@@ -154,7 +167,7 @@ const GithubIssueCard = (props) => {
                     className="min-w-[111px] justify-center flex group items-center w-fit relative"
                   >
                     <p className="text-gray-500 dark:text-gray-300 group-hover:text-[#B17C01]">
-                      ₿ {satoshis * 1e-8}
+                      ₿ {(satoshis * 1e-8).toFixed(3)}
                     </p>
                   </div>
                   <div
@@ -179,6 +192,8 @@ const GithubIssueCard = (props) => {
                   <BoostButton
                     content={txid}
                     difficulty={difficulty || 0}
+                    //@ts-ignore
+                    theme={theme.theme}
                     showDifficulty
                     onSending={handleBoostLoading}
                     onError={handleBoostError}

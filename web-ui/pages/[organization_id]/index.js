@@ -1,15 +1,15 @@
 import { useRouter } from "next/router";
-import React, {useState} from "react";
-import ThreeColumnLayout from "../../../components/ThreeColumnLayout";
-import GithubIssueCard from "../../../components/GithubIssueCard";
-import {Loader} from "../../../components";
-import { useTuning } from "../../../context/TuningContext";
-import { useOnchain } from "../../../hooks/useOnchain";
-import Dashboard from "../../../components/Dashboard";
-import { useAPI } from "../../../hooks/useAPI";
+import React, { useEffect, useState } from "react";
+import ThreeColumnLayout from "../../components/ThreeColumnLayout";
+import GithubIssueCard from "../../components/GithubIssueCard";
+import { Loader } from "../../components";
+import { useTuning } from "../../context/TuningContext";
+import { useOnchain } from "../../hooks/useOnchain";
+import Dashboard from "../../components/Dashboard";
+import { useAPI } from "../../hooks/useAPI";
 
 const OrganizationPage = () => {
-  const [tab, setTab] = useState("open")
+  const [tab, setTab] = useState("open");
   const router = useRouter();
   const query = router.query;
   const { startTimestamp } = useTuning();
@@ -24,7 +24,7 @@ const OrganizationPage = () => {
   return (
     <ThreeColumnLayout>
       <div className="col-span-12 lg:col-span-6 min-h-screen">
-      <div className="px-4 mt-2">
+        <div className="px-4 mt-2">
           <div className="flex my-6">
             <div className="flex">
               <div
@@ -56,12 +56,13 @@ const OrganizationPage = () => {
         </div>
         <div className="w-full py-5">
           <div className="relative">
-            {loading && <Loader/>}
-            {!error && issues?.map((entry) => {
-              if (entry) {
-                return <GithubIssueCard key={entry.txid} {...entry} />;
-              }
-            })}
+            {loading && <Loader />}
+            {!error &&
+              issues?.map((entry) => {
+                if (entry) {
+                  return <GithubIssueCard key={entry.txid} {...entry} />;
+                }
+              })}
           </div>
         </div>
       </div>

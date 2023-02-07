@@ -6,11 +6,10 @@ import "../styles/globals.css";
 import { SplashScreen } from "../components";
 import { RelayProvider } from "../context/RelayContext";
 import { TuneProvider } from "../context/TuningContext";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { TwetchProvider } from "../context/TwetchContext";
 import { BitcoinProvider } from "../context/BitcoinContext";
 import Head from "next/head";
+import { Toaster } from "react-hot-toast";
 
 function MyApp({ Component, pageProps }) {
   /*  const [loading, setLoading] = useState(false);
@@ -50,11 +49,11 @@ function MyApp({ Component, pageProps }) {
             <BitcoinProvider>
               <TuneProvider>
                 <Component {...pageProps} />
+                <Toaster />
               </TuneProvider>
             </BitcoinProvider>
           </RelayProvider>
         </TwetchProvider>
-        <ToastContainer />
       </ThemeProvider>
     </>
   );
