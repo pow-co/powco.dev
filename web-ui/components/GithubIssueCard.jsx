@@ -36,6 +36,7 @@ const GithubIssueCard = (props) => {
     body,
     closed_at,
     comments,
+    number,
     comments_url,
     created_at,
     html_url,
@@ -48,6 +49,8 @@ const GithubIssueCard = (props) => {
   const [bugBountyPopupOpen, setBugBountyPopupOpen] = useState(false)
 
   let toastId;
+
+  console.log(props)
 
   const handleComment = (e) => {
     e.preventDefault();
@@ -103,10 +106,16 @@ const GithubIssueCard = (props) => {
     });
   };
 
+  const navigate = (e) => {
+    e.preventDefault()
+    e.stopPropagation()
+    router.push(`/${org}/${repo}/issues/${number}`)
+  }
+
 
   return (
     <>
-      <div className="grid grid-cols-12 bg-gray-100 dark:bg-gray-600 hover:bg-gray-200 hover:dark:bg-gray-500 mt-0.5 first:rounded-t-lg">
+      <div onClick={navigate} className="grid grid-cols-12 bg-gray-100 dark:bg-gray-600 hover:bg-gray-200 hover:dark:bg-gray-500 mt-0.5 first:rounded-t-lg">
         <div className="col-span-12 flex items-center justify-between">
           {/* <p className='p-4 text-sm italic text-gray-500 hover:underline'><a target="_blank" rel="noreferrer" href={repository.html_url}>{org} /{repo}</a></p> */}
           <p className="p-4 text-sm italic text-gray-600 dark:text-gray-300">
