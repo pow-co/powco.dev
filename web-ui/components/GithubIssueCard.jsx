@@ -50,7 +50,6 @@ const GithubIssueCard = (props) => {
 
   let toastId;
 
-  console.log(props)
 
   const handleComment = (e) => {
     e.preventDefault();
