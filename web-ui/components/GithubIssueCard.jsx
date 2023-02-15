@@ -11,6 +11,27 @@ import { toast } from "react-hot-toast";
 import BugBountyPopup from "./BugBountyPopup";
 import { useTheme } from "next-themes";
 
+const Markdown = require('react-remarkable')
+
+const RemarkableOptions = {
+    breaks: true,
+    html: true,
+    typographer: true,
+    /* highlight: function (str: any, lang: any) {
+      if (lang && hljs.getLanguage(lang)) {
+        try {
+          return hljs.highlight(lang, str).value;
+        } catch (err) {}
+      }
+  
+      try {
+        return hljs.highlightAuto(str).value;
+      } catch (err) {}
+  
+      return ''; // use external default escaping
+    } */
+}
+
 async function getBalance(address) {
   const { data } = await axios.get(
     `https://api.whatsonchain.com/v1/bsv/main/address/${address}/balance`
@@ -53,6 +74,7 @@ const GithubIssueCard = (props) => {
 
   const handleComment = (e) => {
     e.preventDefault();
+    e.stopPropagation()
     window.open(html_url);
   };
 
@@ -61,14 +83,18 @@ const GithubIssueCard = (props) => {
   }
 
   useEffect(() => {
+    updateBalance()
+  }, []);
+
+  const updateBalance = () => {
     getBalance(run_owner).then((balance) => {
       setSatoshis(balance);
     });
-  }, []);
+  }
 
-  function handleClickRewards() {
+  function handleClickRewards(e) {
     //window.open(`https://whatsonchain.com/address/${run_owner}`, "_blank");
-
+    e.stopPropagation()
     setBugBountyPopupOpen(true)
   }
 
@@ -111,21 +137,23 @@ const GithubIssueCard = (props) => {
     router.push(`/${org}/${repo}/issues/${number}`)
   }
 
+  
+
 
   return (
     <>
       <div onClick={navigate} className="grid grid-cols-12 bg-gray-100 dark:bg-gray-600 hover:bg-gray-200 hover:dark:bg-gray-500 mt-0.5 first:rounded-t-lg">
         <div className="col-span-12 flex items-center justify-between">
           {/* <p className='p-4 text-sm italic text-gray-500 hover:underline'><a target="_blank" rel="noreferrer" href={repository.html_url}>{org} /{repo}</a></p> */}
-          <p className="p-4 text-sm italic text-gray-600 dark:text-gray-300">
-            <Link href={`/${org}`}>
+          <div onClick={(e)=>e.stopPropagation()} className="p-4 text-sm italic text-gray-600 dark:text-gray-300">
+            <Link  href={`/${org}`}>
               <span className="hover:underline cursor-pointer">{org}</span>
             </Link>
             <span className="mx-1">/</span>
             <Link href={`/${org}/${repo}`}>
               <span className="hover:underline cursor-pointer">{repo}</span>
             </Link>
-          </p>
+          </div>
           {labels.length > 0 && (
             <div className="flex pr-4">
               <div
@@ -139,7 +167,7 @@ const GithubIssueCard = (props) => {
         <div className="col-span-12">
           <div className="mb-0.5 px-4 pt-4 pb-1 grid items-start grid-cols-12 max-w-screen cursor-pointer">
             <div className="col-span-1">
-              <a target="_blank" rel="noreferrer" href={user.html_url}>
+              <a onClick={(e)=>e.stopPropagation()} target="_blank" rel="noreferrer" href={user.html_url}>
                 <UserIcon src={user.avatar_url} size={46} />
               </a>
             </div>
@@ -155,6 +183,7 @@ const GithubIssueCard = (props) => {
                 </a>
                 <div className="grow" />
                 <a
+                  onClick={(e)=>e.stopPropagation()}
                   target="_blank"
                   rel="noreferrer"
                   href={`https://whatsonchain.com/tx/${txid}`}
@@ -163,9 +192,9 @@ const GithubIssueCard = (props) => {
                   {moment(created_at).fromNow()}
                 </a>
               </div>
-              <div className="mt-1 text-gray-900 dark:text-white text-base leading-6 whitespace-pre-line break-words">
-                {body}
-              </div>
+              <article className='prose dark:prose-invert prose-a:text-blue-600'>
+                <Markdown options={RemarkableOptions} source={body}/>
+              </article>
               <div className="ml-1">
                 <div className="flex w-full px-16">
                   <div className="grow" />
@@ -218,7 +247,7 @@ const GithubIssueCard = (props) => {
         isOpen={bugBountyPopupOpen}
         onClose={() => setBugBountyPopupOpen(false)}
       >
-        <BugBountyPopup address={run_owner} onClose={() => setBugBountyPopupOpen(false)}/>
+        <BugBountyPopup address={run_owner} onBounty={() =>updateBalance()} onClose={() => setBugBountyPopupOpen(false)}/>
       </Drawer>
     </>
   );
