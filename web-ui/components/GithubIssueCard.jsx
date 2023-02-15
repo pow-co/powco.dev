@@ -83,10 +83,14 @@ const GithubIssueCard = (props) => {
   }
 
   useEffect(() => {
+    updateBalance()
+  }, []);
+
+  const updateBalance = () => {
     getBalance(run_owner).then((balance) => {
       setSatoshis(balance);
     });
-  }, []);
+  }
 
   function handleClickRewards(e) {
     //window.open(`https://whatsonchain.com/address/${run_owner}`, "_blank");
@@ -132,6 +136,8 @@ const GithubIssueCard = (props) => {
     e.stopPropagation()
     router.push(`/${org}/${repo}/issues/${number}`)
   }
+
+  
 
 
   return (
@@ -241,7 +247,7 @@ const GithubIssueCard = (props) => {
         isOpen={bugBountyPopupOpen}
         onClose={() => setBugBountyPopupOpen(false)}
       >
-        <BugBountyPopup address={run_owner} onClose={() => setBugBountyPopupOpen(false)}/>
+        <BugBountyPopup address={run_owner} onBounty={() =>updateBalance()} onClose={() => setBugBountyPopupOpen(false)}/>
       </Drawer>
     </>
   );

@@ -8,7 +8,7 @@ const Run = require('run-sdk');
 
 
 
-const BugBountyPopup = ({ address, onClose }) => {
+const BugBountyPopup = ({ address, onBounty, onClose }) => {
     const { exchangeRate } = useBitcoin()
     const { relayOne, runOwner } = useRelay()
     const [tab, setTab] = useState("bitcoin")
@@ -67,6 +67,7 @@ const BugBountyPopup = ({ address, onClose }) => {
               currency:'BSV'
           })
           handleBountySuccess()
+          onBounty()
           onClose()
           
         } catch (error) {
