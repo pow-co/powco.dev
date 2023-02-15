@@ -53,6 +53,7 @@ const GithubIssueCard = (props) => {
 
   const handleComment = (e) => {
     e.preventDefault();
+    e.stopPropagation()
     window.open(html_url);
   };
 
@@ -66,9 +67,9 @@ const GithubIssueCard = (props) => {
     });
   }, []);
 
-  function handleClickRewards() {
+  function handleClickRewards(e) {
     //window.open(`https://whatsonchain.com/address/${run_owner}`, "_blank");
-
+    e.stopPropagation()
     setBugBountyPopupOpen(true)
   }
 
@@ -117,15 +118,15 @@ const GithubIssueCard = (props) => {
       <div onClick={navigate} className="grid grid-cols-12 bg-gray-100 dark:bg-gray-600 hover:bg-gray-200 hover:dark:bg-gray-500 mt-0.5 first:rounded-t-lg">
         <div className="col-span-12 flex items-center justify-between">
           {/* <p className='p-4 text-sm italic text-gray-500 hover:underline'><a target="_blank" rel="noreferrer" href={repository.html_url}>{org} /{repo}</a></p> */}
-          <p className="p-4 text-sm italic text-gray-600 dark:text-gray-300">
-            <Link href={`/${org}`}>
+          <div onClick={(e)=>e.stopPropagation()} className="p-4 text-sm italic text-gray-600 dark:text-gray-300">
+            <Link  href={`/${org}`}>
               <span className="hover:underline cursor-pointer">{org}</span>
             </Link>
             <span className="mx-1">/</span>
             <Link href={`/${org}/${repo}`}>
               <span className="hover:underline cursor-pointer">{repo}</span>
             </Link>
-          </p>
+          </div>
           {labels.length > 0 && (
             <div className="flex pr-4">
               <div
@@ -139,7 +140,7 @@ const GithubIssueCard = (props) => {
         <div className="col-span-12">
           <div className="mb-0.5 px-4 pt-4 pb-1 grid items-start grid-cols-12 max-w-screen cursor-pointer">
             <div className="col-span-1">
-              <a target="_blank" rel="noreferrer" href={user.html_url}>
+              <a onClick={(e)=>e.stopPropagation()} target="_blank" rel="noreferrer" href={user.html_url}>
                 <UserIcon src={user.avatar_url} size={46} />
               </a>
             </div>
@@ -155,6 +156,7 @@ const GithubIssueCard = (props) => {
                 </a>
                 <div className="grow" />
                 <a
+                  onClick={(e)=>e.stopPropagation()}
                   target="_blank"
                   rel="noreferrer"
                   href={`https://whatsonchain.com/tx/${txid}`}
