@@ -11,6 +11,27 @@ import { toast } from "react-hot-toast";
 import BugBountyPopup from "./BugBountyPopup";
 import { useTheme } from "next-themes";
 
+const Markdown = require('react-remarkable')
+
+const RemarkableOptions = {
+    breaks: true,
+    html: true,
+    typographer: true,
+    /* highlight: function (str: any, lang: any) {
+      if (lang && hljs.getLanguage(lang)) {
+        try {
+          return hljs.highlight(lang, str).value;
+        } catch (err) {}
+      }
+  
+      try {
+        return hljs.highlightAuto(str).value;
+      } catch (err) {}
+  
+      return ''; // use external default escaping
+    } */
+}
+
 async function getBalance(address) {
   const { data } = await axios.get(
     `https://api.whatsonchain.com/v1/bsv/main/address/${address}/balance`
@@ -165,9 +186,9 @@ const GithubIssueCard = (props) => {
                   {moment(created_at).fromNow()}
                 </a>
               </div>
-              <div className="mt-1 text-gray-900 dark:text-white text-base leading-6 whitespace-pre-line break-words">
-                {body}
-              </div>
+              <article className='prose dark:prose-invert prose-a:text-blue-600'>
+                <Markdown options={RemarkableOptions} source={body}/>
+              </article>
               <div className="ml-1">
                 <div className="flex w-full px-16">
                   <div className="grow" />
