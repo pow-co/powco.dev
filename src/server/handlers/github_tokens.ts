@@ -15,11 +15,24 @@ const { createAppAuth, createOAuthUserAuth } = require("@octokit/auth-app");
 
 import * as github from '../../github'
 
+import { validateAuthToken } from '../../relayx'
+
 export async function create(req, h) {
 
     try {
         
-        const { code, installation_id, setup_action, paymail, run_owner_address } = req.payload
+        const { code, paymail, relayoneAuthToken } = req.payload
+
+        console.log('server.handlers.github_tokens.create', req.payload)
+
+        const result = validateAuthToken(relayoneAuthToken)
+
+        console.log('relayone.auth.result', result)
+
+        if (!result) {
+                
+                return badRequest('Invalid relayoneAuthToken')
+        }
 
         const appOctokit = new Octokit({
             authStrategy: createAppAuth,
@@ -46,7 +59,7 @@ export async function create(req, h) {
         
         console.log('user.login', github_user)
 
-        return { github_user, code, installation_id, setup_action, paymail, run_owner_address }
+        return { github_user, code, paymail }
 
     } catch(error) {
 
