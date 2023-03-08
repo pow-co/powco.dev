@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import { Drawer, UserIcon } from ".";
 import { useEffect, useState } from "react";
-import { BoostButton } from "myboostpow-lib";
+import { BoostButton } from "boostpow-button";
 
 import axios from "axios";
 import { toast } from "react-hot-toast";
