@@ -37,7 +37,9 @@ module.exports = (sequelize, DataTypes) => {
     state: DataTypes.STRING,
     run_origin: DataTypes.STRING,
     run_location: DataTypes.STRING,
-    run_owner: DataTypes.STRING
+    run_owner: DataTypes.STRING,
+    title: DataTypes.STRING,
+    description: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'GithubIssue',
