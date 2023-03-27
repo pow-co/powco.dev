@@ -39,7 +39,7 @@ export async function importProofsFromTxHex({tx_hex}: {tx_hex: string}): Promise
 
     const proofs = await models.BoostPowProof.findAll({
         where: {
-            txid: tx.hash || tx.txid
+            txid: tx.hash
         }
     })
 

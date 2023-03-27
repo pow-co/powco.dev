@@ -173,7 +173,15 @@ server.route({
   }
 })
 
-
+server.route({
+  method: 'GET',
+  path: '/api/v1/content/{txid}',
+  handler: handlers.Content.show,
+  options: {
+    description: 'Show content parsed from DevIssue smart contract',
+    tags: ['api', 'github', 'issues']
+  }
+})
 
 var started = false
 

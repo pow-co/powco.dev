@@ -31,10 +31,16 @@ module.exports = (sequelize, DataTypes) => {
   GithubIssue.init({
     issue_id: DataTypes.NUMBER,
     data: DataTypes.JSON,
+    json: DataTypes.JSON,
+    platform: DataTypes.STRING,
+    version: DataTypes.STRING,
     repo: DataTypes.STRING,
     org: DataTypes.STRING,
     txid: DataTypes.STRING,
+    txhex: DataTypes.STRING,
     state: DataTypes.STRING,
+    title: DataTypes.STRING,
+    description: DataTypes.STRING,
     run_origin: DataTypes.STRING,
     run_location: DataTypes.STRING,
     run_owner: DataTypes.STRING

@@ -1,7 +1,9 @@
 
-//import { powcodev } from 'stag-wallet'
-import { powcodev } from '/Users/zyler/github/pow-co/stag-wallet/src'
+import { parseDevIssueFromRawTransaction } from '../../scrypt'
 
+import * as models from '../../models'
+
+import { fetch } from 'powco'
 
 import { badRequest } from 'boom'
 
@@ -9,11 +11,29 @@ export async function show(req, h) {
 
   const { txid } = req.params
 
+  let txhex: string;
+
   try {
 
-    const issue = await powcodev.fetchDevIssue(txid)
+    const record = await models.GithubIssue.findOne({
+      where: { txid }
+    })
 
-    return issue
+    if (!record) {
+
+    }
+
+    txhex = record.txhex
+
+    if (!txhex) {
+
+      txhex = await fetch(txid)
+
+    }
+
+    const issue = await parseDevIssueFromRawTransaction(txhex)
+
+    return Object.assign(issue, { txid, txhex })
 
   } catch(error) {
 
@@ -24,3 +44,4 @@ export async function show(req, h) {
   }
 
 }
+

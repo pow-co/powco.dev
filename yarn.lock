@@ -5752,10 +5752,10 @@
     "winston" "^3.8.2"
     "winston-loki" "^6.0.6"
 
-"stag-wallet@^0.7.5":
-  "integrity" "sha512-Vsk7knJ4+0i0PTRUUSgUo5EMAwtXSf6D2zggOE4J2Uv/Y8xyrxwYiyB61fQaNBQGbZi2CANiTX2BLaKr0Pz1Ng=="
-  "resolved" "https://registry.npmjs.org/stag-wallet/-/stag-wallet-0.7.5.tgz"
-  "version" "0.7.5"
+"stag-wallet@^0.7.6":
+  "integrity" "sha512-BYByjLUo1f7syQcR8SIoS57FO5PGiUGR4ur/8GnjlXTrIfvvtOvSrBg5WWxzXOOff8y/7DFRbznFpCLKQBE22w=="
+  "resolved" "https://registry.npmjs.org/stag-wallet/-/stag-wallet-0.7.6.tgz"
+  "version" "0.7.6"
   dependencies:
     "@babel/runtime" "^7.20.1"
     "@runonbitcoin/tokenkit" "^1.1.0"

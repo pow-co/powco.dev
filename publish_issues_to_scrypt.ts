@@ -2,8 +2,7 @@ require("dotenv").config()
 
 import { Op } from 'sequelize'
 
-//import { powcodev } from 'stag-wallet'
-import { powcodev } from '/Users/zyler/github/pow-co/stag-wallet/src'
+import { deployDevIssueContract, fetchDevIssue, DevIssueContract } from './src/scrypt'
 
 import delay from 'delay'
 
@@ -44,7 +43,7 @@ export async function start() {
 
       console.log('powcodev.deployDevIssueContract', params)
 
-      const result = await powcodev.deployDevIssueContract(params, 1000)
+      const result = await deployDevIssueContract(params, 1000)
 
       console.log('powcodev.deployDevIssueContract.result', result)
 
@@ -52,7 +51,7 @@ export async function start() {
 
       await issue.save()
 
-      const devIssue = await powcodev.fetchDevIssue(result)
+      const devIssue = await fetchDevIssue(result)
 
       console.log(devIssue)
 
@@ -70,7 +69,7 @@ export async function start() {
 
 function toJSON(txhex: string): any | null {
 
-  const contract = powcodev.DevIssueContract.fromTransaction(txhex)
+  const contract = DevIssueContract.fromTransaction(txhex)
 
   if (!contract) { return null }
 
