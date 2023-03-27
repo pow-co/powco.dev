@@ -30,6 +30,11 @@
       "@octokit/auth-token": "^3.0.2",
       "@octokit/core": "^4.1.0",
       "@octokit/rest": "^19.0.7",
+      "@runonbitcoin/tokenkit": "^1.1.0",
+      "atob": "^2.1.2",
+      "bsv": "^1.5.6",
+      "bsv-2": "npm:bsv@^2.0.10",
+      "buffer-reverse": "^1.0.1",
       "commander": "^9.3.0",
       "dotenv": "^10.0.0",
       "hapi-swagger": "^14.3.0",
@@ -45,8 +50,9 @@
       "prompt-async": "^0.9.9",
       "rabbi": "^1.21.0",
       "run-sdk": "^0.6.41",
+      "scrypt-ts": "^0.1.6-beta.8",
       "sequelize": "^6.25.3",
-      "stag-wallet": "^0.5.1",
+      "stag-wallet": "^0.7.5",
       "superagent": "^8.0.2",
       "txo": "^0.0.21",
       "winston": "^3.3.3",
@@ -66,7 +72,7 @@
       "shebang-trim": "^1.1.0",
       "ts-node": "3.3.0",
       "ts-node-dev": "^2.0.0",
-      "typescript": "^3.3.3333"
+      "typescript": "^4.8.4"
    },
    "config": {
       "commitizen": {
